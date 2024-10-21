@@ -34,8 +34,14 @@ public class Form_Artist extends javax.swing.JPanel {
         scrollArtist.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
 
         listArtist_Ngang.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                updateArtistInfo((Model_Artist) listArtist_Ngang.getSelectedValue());
+            Model_Artist selectedArtist = (Model_Artist) listArtist_Ngang.getSelectedValue();
+            if (selectedArtist != null) {
+                updateArtistInfo(selectedArtist);
+            } else {
+                edt_artistID.setText(null);
+                edt_name.setText(null);
+                imagePathArtist = "";
+                lb_imageArtist.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
             }
         });
     }
@@ -85,14 +91,13 @@ public class Form_Artist extends javax.swing.JPanel {
         lb_xoa = new javax.swing.JLabel();
         lb_sua = new javax.swing.JLabel();
         edt_timkiem = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        them = new javax.swing.JLabel();
         edt_artistID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         edt_name = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         lb_imageArtist = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        load = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 51, 51));
         setMaximumSize(new java.awt.Dimension(800, 650));
@@ -142,9 +147,16 @@ public class Form_Artist extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("ArtistID:");
+        them.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        them.setForeground(new java.awt.Color(255, 255, 255));
+        them.setText("ArtistID:");
+        them.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                themMouseClicked(evt);
+            }
+        });
+
+        edt_artistID.setEditable(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -164,13 +176,6 @@ public class Form_Artist extends javax.swing.JPanel {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/find.png"))); // NOI18N
 
-        load.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/load.png"))); // NOI18N
-        load.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loadMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,7 +187,7 @@ public class Form_Artist extends javax.swing.JPanel {
                     .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addComponent(them)
                             .addComponent(jLabel5))
                         .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -197,18 +202,13 @@ public class Form_Artist extends javax.swing.JPanel {
                         .addContainerGap(112, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(load))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lb_them)
-                                .addGap(18, 18, 18)
-                                .addComponent(lb_sua)
-                                .addGap(18, 18, 18)
-                                .addComponent(lb_xoa)))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lb_them)
+                        .addGap(18, 18, 18)
+                        .addComponent(lb_sua)
+                        .addGap(18, 18, 18)
+                        .addComponent(lb_xoa)
                         .addGap(40, 40, 40))))
         );
         layout.setVerticalGroup(
@@ -218,16 +218,14 @@ public class Form_Artist extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_imageArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
+                        .addComponent(them)
                         .addComponent(edt_artistID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)))
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(edt_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addComponent(load)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -324,22 +322,24 @@ public class Form_Artist extends javax.swing.JPanel {
 
                 imagePathArtist = "";
                 lb_imageArtist.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
-                // updatedata();
+                updatedata();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
         }
     }//GEN-LAST:event_lb_xoaMouseClicked
 
-    private void loadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadMouseClicked
-        updatedata();
-    }//GEN-LAST:event_loadMouseClicked
+    private void themMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themMouseClicked
+        int ThemID = 0;
+        List<Model_Artist> artists = MusicApp.getAllArtists();
+        ThemID = artists.size(); // Đếm số lượng người dùng trực tiếp
+        edt_artistID.setText(String.valueOf(ThemID + 1));
+    }//GEN-LAST:event_themMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField edt_artistID;
     private javax.swing.JTextField edt_name;
     private javax.swing.JTextField edt_timkiem;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -348,7 +348,7 @@ public class Form_Artist extends javax.swing.JPanel {
     private javax.swing.JLabel lb_them;
     private javax.swing.JLabel lb_xoa;
     private com.mycompany.musicapp.list.ListArtist_Ngang listArtist_Ngang;
-    private javax.swing.JLabel load;
     private javax.swing.JScrollPane scrollArtist;
+    private javax.swing.JLabel them;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,7 +25,7 @@ import javax.swing.SwingUtilities;
 
 public class Form_Albums extends javax.swing.JPanel {
 
-    private String imagePathAlbum = "";
+    String imagePathAlbum = "";
 
     public Form_Albums() {
         initComponents();
@@ -37,8 +37,15 @@ public class Form_Albums extends javax.swing.JPanel {
         scrollAlbum.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         loadArtistToComboBox();
         listAlbum_Ngang2.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                updateAlbumInfo((Model_Album) listAlbum_Ngang2.getSelectedValue());
+            Model_Album selectedAlbum = (Model_Album) listAlbum_Ngang2.getSelectedValue();
+            if (selectedAlbum != null) {
+                updateAlbumInfo(selectedAlbum);
+            } else {
+                edt_albumID.setText(null);
+                edt_titleAlbum.setText(null);
+                cbb_artistID.setSelectedIndex(0);
+                imagePathAlbum = "";
+                lb_imageAlbum.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
             }
         });
 
@@ -163,6 +170,13 @@ public class Form_Albums extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("AlbumID:");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        edt_albumID.setEditable(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -302,7 +316,7 @@ public class Form_Albums extends javax.swing.JPanel {
                 edt_albumID.setText(null);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_lb_themMouseClicked
 
@@ -320,9 +334,10 @@ public class Form_Albums extends javax.swing.JPanel {
                 imagePathAlbum = "";
                 lb_imageAlbum.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
                 updatedata();
+
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_lb_xoaMouseClicked
 
@@ -343,9 +358,16 @@ public class Form_Albums extends javax.swing.JPanel {
             lb_imageAlbum.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
             updatedata();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_lb_suaMouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        int ThemID = 0;
+        List<Model_Album> albums = MusicApp.getAllAlbum();
+        ThemID = albums.size(); // Đếm số lượng người dùng trực tiếp
+        edt_albumID.setText(String.valueOf(ThemID + 1));
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbb_artistID;

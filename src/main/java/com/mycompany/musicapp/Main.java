@@ -18,6 +18,7 @@ import java.awt.Color;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Main extends javax.swing.JFrame {
 
@@ -73,7 +74,11 @@ public class Main extends javax.swing.JFrame {
                 case 8 -> {
                     int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát chương trình?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
-                        System.exit(0);
+
+                        Login_Main login = new Login_Main();
+                        setVisible(false);
+                        login.setVisible(true);
+
                     }
                 }
                 default -> {

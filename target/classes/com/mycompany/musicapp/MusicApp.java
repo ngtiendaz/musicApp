@@ -46,8 +46,7 @@ public class MusicApp {
         return new Model_Album(AlbumID, ArtistID, TitleAlbum, ImagePathAlbum, NameArtist);
     }
 
-    private static Model_User mapResultSetToUser(ResultSet rs) throws SQLException {
-
+    public static Model_User mapResultSetToUser(ResultSet rs) throws SQLException {
         int UserID = rs.getInt("UserID");
         String Email = rs.getString("Email");
         String Pass = rs.getString("Pass");
@@ -216,7 +215,7 @@ public class MusicApp {
 
     public static void addUser(int UserID, String Email, String Pass, String ImagePathArtists, String NameUser, String role) {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO user (UserID, Email, Pass, ImagePathArtists, NameUser, role) "
+                "INSERT INTO user (UserID, Email, Pass, ImagePathUser, NameUser, role) "
                 + "VALUES (?, ?, ?, ?,?,?)")) {
             stmt.setInt(1, UserID);
             stmt.setString(2, Email);
@@ -491,6 +490,32 @@ public class MusicApp {
     public static void deleteUser(int UserID) {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM user WHERE UserID = ?")) {
             stmt.setInt(1, UserID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateSong(int SongID, int CategoryID, int AlbumID, int ArtistID, String ImagePathSong, String TitleSong, String AudioSrc, int Like) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("UPDATE songs SET CategoryID = ?, AlbumID = ?,ArtistID=?, ImagePathSong = ?, TitleSong = ?, AudioSrc = ? , `Like` = ? WHERE SongID = ?")) {
+            stmt.setInt(1, CategoryID);
+            stmt.setInt(2, AlbumID);
+            stmt.setInt(3, ArtistID);
+
+            stmt.setString(4, ImagePathSong);
+            stmt.setString(5, TitleSong);
+            stmt.setString(6, AudioSrc);
+            stmt.setInt(7, 0);
+            stmt.setInt(8, SongID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteSong(int SongID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM songs WHERE SongID = ?")) {
+            stmt.setInt(1, SongID);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

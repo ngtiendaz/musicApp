@@ -3,6 +3,7 @@ package com.mycompany.musicapp.formAdmin;
 import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.model.CheckLoi;
 import com.mycompany.musicapp.model.Model_Album;
+import com.mycompany.musicapp.model.Model_Artist;
 import com.mycompany.musicapp.model.Model_User;
 import com.mycompany.musicapp.swing.ScrollBar;
 import java.awt.Color;
@@ -33,8 +34,16 @@ public class Form_User extends javax.swing.JPanel {
         scrollUser.getViewport().setBackground(Color.BLACK);
         scrollUser.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         listUser.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                updateUserInfo((Model_User) listUser.getSelectedValue());
+            Model_User selectedUser = (Model_User) listUser.getSelectedValue();
+            if (selectedUser != null) {
+                updateUserInfo(selectedUser);
+            } else {
+                edt_email.setText(null);
+                edt_pass.setText(null);
+                edt_username.setText(null);
+                edt_userID.setText(null);
+                imagePathUser = "";
+                lb_imageUser.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
             }
         });
     }
@@ -80,7 +89,7 @@ public class Form_User extends javax.swing.JPanel {
 
         scrollUser = new javax.swing.JScrollPane();
         listUser = new com.mycompany.musicapp.list.ListUser();
-        jLabel1 = new javax.swing.JLabel();
+        themID = new javax.swing.JLabel();
         edt_timkiem = new javax.swing.JTextField();
         lb_xoa = new javax.swing.JLabel();
         lb_sua = new javax.swing.JLabel();
@@ -95,7 +104,6 @@ public class Form_User extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         lb_imageUser = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        clear = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 153, 153));
         setMaximumSize(new java.awt.Dimension(800, 650));
@@ -109,9 +117,14 @@ public class Form_User extends javax.swing.JPanel {
         listUser.setBorder(null);
         scrollUser.setViewportView(listUser);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("UserID:");
+        themID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        themID.setForeground(new java.awt.Color(255, 255, 255));
+        themID.setText("UserID:");
+        themID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                themIDMouseClicked(evt);
+            }
+        });
 
         edt_timkiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -149,6 +162,8 @@ public class Form_User extends javax.swing.JPanel {
             }
         });
 
+        edt_userID.setEditable(false);
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Email:");
@@ -175,13 +190,6 @@ public class Form_User extends javax.swing.JPanel {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/find.png"))); // NOI18N
 
-        clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/load.png"))); // NOI18N
-        clear.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                clearMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,7 +202,7 @@ public class Form_User extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(themID)
                                 .addGap(71, 71, 71))
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
@@ -206,23 +214,18 @@ public class Form_User extends javax.swing.JPanel {
                             .addComponent(edt_username, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
-                                .addComponent(lb_them)
-                                .addGap(18, 18, 18)
-                                .addComponent(lb_sua))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(42, 42, 42)
-                                .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                        .addComponent(lb_them)
                         .addGap(18, 18, 18)
-                        .addComponent(lb_xoa))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(clear)))
+                        .addComponent(lb_sua))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(42, 42, 42)
+                        .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(lb_xoa)
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -232,7 +235,7 @@ public class Form_User extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(themID)
                             .addComponent(edt_userID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -243,14 +246,10 @@ public class Form_User extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(edt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(edt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(clear)
-                                .addGap(6, 6, 6))))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(edt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,6 +308,7 @@ public class Form_User extends javax.swing.JPanel {
                     edt_userID.setText(null);
                     imagePathUser = "";
                     lb_imageUser.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
+                    updatedata();
 
                 } else {
                     JOptionPane.showMessageDialog(this, "UserID đã tồn tại");
@@ -341,6 +341,7 @@ public class Form_User extends javax.swing.JPanel {
 
             imagePathUser = "";
             lb_imageUser.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
+            updatedata();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
@@ -360,6 +361,7 @@ public class Form_User extends javax.swing.JPanel {
                 edt_userID.setText(null);
                 imagePathUser = "";
                 lb_imageUser.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
+                updatedata();
 
             }
         } catch (Exception e) {
@@ -367,25 +369,19 @@ public class Form_User extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lb_xoaMouseClicked
 
-    private void clearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseClicked
-        edt_email.setText("");
-        edt_pass.setText("");
-        edt_userID.setText("");
-        edt_username.setText("");
-        imagePathUser = "";
-        lb_imageUser.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
-        updatedata();
-
-    }//GEN-LAST:event_clearMouseClicked
+    private void themIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themIDMouseClicked
+        int ThemID = 0;
+        List<Model_User> users = MusicApp.getAllUser();
+        ThemID = users.size(); // Đếm số lượng người dùng trực tiếp
+        edt_userID.setText(String.valueOf(ThemID + 2));
+    }//GEN-LAST:event_themIDMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel clear;
     private javax.swing.JTextField edt_email;
     private javax.swing.JTextField edt_pass;
     private javax.swing.JTextField edt_timkiem;
     private javax.swing.JTextField edt_userID;
     private javax.swing.JTextField edt_username;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -397,5 +393,6 @@ public class Form_User extends javax.swing.JPanel {
     private javax.swing.JLabel lb_xoa;
     private com.mycompany.musicapp.list.ListUser listUser;
     private javax.swing.JScrollPane scrollUser;
+    private javax.swing.JLabel themID;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,8 +1,10 @@
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemAlbum.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Menu.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\ImageAvatar.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\PanelGradiente.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formAdmin\Form_Albums.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\event\EventSongSelected.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\PanelBorder.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemSong_V.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemAlbum_Ngang.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Next_Album.java
@@ -15,12 +17,15 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Next_C
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\Main_Admin.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Menu.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\ModernScrollBarUI.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\MyPassword.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\PanelSlide.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\event\EventArtistSelected.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Category.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListAlbum.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListSong_V.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListMenu.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListSong_H.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formLogin\Form_Register.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListAlbum_Ngang.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Album.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\Slider.java
@@ -39,6 +44,7 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemSong_H.
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formAdmin\Form_Category.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemCategory.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemArtist_Ngang.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\MyTextField.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Profile.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\event\EventAlbumSelected.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\CheckLoi.java
@@ -50,8 +56,11 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Find.j
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formAdmin\Admin_Menu.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Following.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListUser.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\MyButton.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Bottom.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formLogin\Form_login.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\Panel.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemArtist.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Library.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Song.java
+D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\Login_Main.java
