@@ -7,7 +7,6 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemSong_V.
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemAlbum_Ngang.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Next_Album.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListArtist.java
-D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\Login.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formAdmin\Form_User.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Home.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\event\EventMenuSelected.java
@@ -26,7 +25,6 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListAlbum_N
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Album.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\Slider.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\formAdmin\Form_Artist.java
-D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form_login\Form_SignIn.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\list\ListCategory.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_User.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Next_Artist.java
@@ -34,7 +32,6 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\event\EventSongL
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Artist.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\ScrollBar.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Add.java
-D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form_login\Form_Register.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemMenu.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\MusicApp.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\event\EventCategorySelected.java
@@ -58,4 +55,3 @@ D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\swing\Panel.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\item\ItemArtist.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form\Form_Library.java
 D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\model\Model_Song.java
-D:\Java Nâng Cao\musicApp\src\main\java\com\mycompany\musicapp\form_login\Form_Admin.java
