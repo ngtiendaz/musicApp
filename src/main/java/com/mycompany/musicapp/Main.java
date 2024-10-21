@@ -14,6 +14,7 @@ import com.mycompany.musicapp.model.Model_Album;
 import com.mycompany.musicapp.model.Model_Artist;
 import com.mycompany.musicapp.model.Model_Category;
 import com.mycompany.musicapp.model.Model_Song;
+import com.mycompany.musicapp.model.Model_User;
 import java.awt.Color;
 
 import javax.swing.JComponent;
@@ -26,6 +27,7 @@ public class Main extends javax.swing.JFrame {
     private Model_Album albums;
     private Model_Artist artists;
     private Model_Category categorys;
+    private static Model_User user;
 
     private Form_Home home;
     private Form_Add add;
@@ -38,7 +40,7 @@ public class Main extends javax.swing.JFrame {
     private Form_Next_Artist nextArtist;
     private Form_Next_Category nextCategory;
 
-    public Main() {
+    public Main(Model_User user) {
         initComponents();
         init();
         nextCategory = new Form_Next_Category();
@@ -65,8 +67,10 @@ public class Main extends javax.swing.JFrame {
                 }
                 case 3 ->
                     setForm(following);
-                case 4 ->
+                case 4 -> {
                     setForm(profile);
+                    profile.updateUser(user);
+                }
                 case 6 ->
                     setForm(add);
                 case 7 ->
@@ -185,7 +189,7 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new Main(user).setVisible(true);
             }
         });
     }
@@ -251,5 +255,9 @@ public class Main extends javax.swing.JFrame {
             bottom1.updateSongInfo(song.getSongID(), song.getImagePathSong(), song.getTitleSong(), song.getNameArtist(), song.getAudioSrc(), song.getLike());
         });
 
+    }
+
+    public void setUser(Model_User user) {
+        this.user = user;
     }
 }

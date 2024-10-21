@@ -131,7 +131,7 @@ public class Form_login extends javax.swing.JPanel {
                     SwingUtilities.getWindowAncestor(this).dispose();
                 } else {
                     System.out.println("Đăng nhập thành công! Chuyển đến trang chủ");
-                    Main main = new Main();
+                    Main main = new Main(user);
                     main.setVisible(true);
                     SwingUtilities.getWindowAncestor(this).dispose();
                 }
