@@ -109,7 +109,7 @@ public class Form_Albums extends javax.swing.JPanel {
         lb_them = new javax.swing.JLabel();
         lb_sua = new javax.swing.JLabel();
         lb_xoa = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        themID = new javax.swing.JLabel();
         edt_albumID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         edt_titleAlbum = new javax.swing.JTextField();
@@ -167,12 +167,12 @@ public class Form_Albums extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("AlbumID:");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        themID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        themID.setForeground(new java.awt.Color(255, 255, 255));
+        themID.setText("AlbumID:");
+        themID.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                themIDMouseClicked(evt);
             }
         });
 
@@ -210,7 +210,7 @@ public class Form_Albums extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addComponent(themID)
                             .addComponent(jLabel5)
                             .addComponent(jLabel8))
                         .addGap(43, 43, 43)
@@ -244,7 +244,7 @@ public class Form_Albums extends javax.swing.JPanel {
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(edt_albumID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
+                            .addComponent(themID)
                             .addComponent(jLabel6))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -362,19 +362,18 @@ public class Form_Albums extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lb_suaMouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void themIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themIDMouseClicked
         int ThemID = 0;
         List<Model_Album> albums = MusicApp.getAllAlbum();
         ThemID = albums.size(); // Đếm số lượng người dùng trực tiếp
         edt_albumID.setText(String.valueOf(ThemID + 1));
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_themIDMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbb_artistID;
     private javax.swing.JTextField edt_albumID;
     private javax.swing.JTextField edt_timkiem;
     private javax.swing.JTextField edt_titleAlbum;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -385,5 +384,6 @@ public class Form_Albums extends javax.swing.JPanel {
     private javax.swing.JLabel lb_xoa;
     private com.mycompany.musicapp.list.ListAlbum_Ngang listAlbum_Ngang2;
     private javax.swing.JScrollPane scrollAlbum;
+    private javax.swing.JLabel themID;
     // End of variables declaration//GEN-END:variables
 }

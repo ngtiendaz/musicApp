@@ -46,6 +46,15 @@ public class MusicApp {
         return new Model_Album(AlbumID, ArtistID, TitleAlbum, ImagePathAlbum, NameArtist);
     }
 
+    private static Model_Category mapResultSetToCategory(ResultSet rs) throws SQLException {
+
+        int CategoryID = rs.getInt("CategoryID");
+        String ImagePathCategory = rs.getString("ImagePathCategory");
+        String TitleCategory = rs.getString("TitleCategory");
+
+        return new Model_Category(CategoryID, TitleCategory, ImagePathCategory);
+    }
+
     public static Model_User mapResultSetToUser(ResultSet rs) throws SQLException {
         int UserID = rs.getInt("UserID");
         String Email = rs.getString("Email");
@@ -199,6 +208,19 @@ public class MusicApp {
         }
     }
 
+    public static void addCategory(int CategoryID, String TitleCategory, String ImagePathCategory) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "INSERT INTO category (CategoryID, TitleCategory, ImagePathCategory) "
+                + "VALUES (?, ?, ?)")) {
+            stmt.setInt(1, CategoryID);
+            stmt.setString(2, TitleCategory);
+            stmt.setString(3, ImagePathCategory);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void addArtists(int ArtistID, String Name, String ImagePathArtists, int Flow) {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
                 "INSERT INTO artists (ArtistID, Name, ImagePathArtists, Flow) "
@@ -278,6 +300,22 @@ public class MusicApp {
             e.printStackTrace();
         }
         return albumList;
+    }
+
+    public static List<Model_Category> timkiemCategory(String TitleCategory) {
+        List<Model_Category> categoryList = new ArrayList<>();
+        try {
+            Connection conn = connect();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM category WHERE TitleCategory LIKE ?");
+            stmt.setString(1, "%" + TitleCategory + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                categoryList.add(mapResultSetToCategory(rs));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryList;
     }
 
     public static List<Model_Artist> timkiemArtist(String Name) {
@@ -516,6 +554,48 @@ public class MusicApp {
     public static void deleteSong(int SongID) {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM songs WHERE SongID = ?")) {
             stmt.setInt(1, SongID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateCategory(int CategoryID, String TitleCategory, String ImagePathCategory) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("UPDATE categroy SET TitleCategory = ?, ImagePathCategory= ? WHERE CategoryID = ?")) {
+            stmt.setString(1, TitleCategory);
+            stmt.setString(2, ImagePathCategory);
+            stmt.setInt(3, CategoryID);
+
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCategory(int CategoryID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM category WHERE CategoryID = ?")) {
+            stmt.setInt(1, CategoryID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // add favorite new
+    public static void addFavorite(int UserID, int SongID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO favorites (UserID, SongID) " + "VALUES (?, ?)")) {
+            stmt.setInt(1, UserID);
+            stmt.setInt(2, SongID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteFavorite(int UserID, int SongID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM favorites WHERE UserID = ? AND SongID = ?")) {
+            stmt.setInt(1, UserID);
+            stmt.setInt(2, SongID);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

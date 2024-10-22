@@ -126,7 +126,7 @@ public class Form_login extends javax.swing.JPanel {
                 Model_User user = MusicApp.mapResultSetToUser(rs);
                 if (user.getRole().equals("admin")) {
                     System.out.println("Đăng nhập thành công! Chuyển đến trang quản trị");
-                    Main_Admin admin = new Main_Admin();
+                    Main_Admin admin = new Main_Admin(user);
                     admin.setVisible(true);
                     SwingUtilities.getWindowAncestor(this).dispose();
                 } else {

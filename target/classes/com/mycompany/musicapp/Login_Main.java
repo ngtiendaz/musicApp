@@ -2,7 +2,6 @@ package com.mycompany.musicapp;
 
 import com.mycompany.musicapp.formLogin.Form_Register;
 import com.mycompany.musicapp.formLogin.Form_login;
-import com.mycompany.musicapp.model.CheckLoi;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;

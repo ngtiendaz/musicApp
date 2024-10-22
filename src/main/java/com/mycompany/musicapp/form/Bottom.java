@@ -1,6 +1,7 @@
 package com.mycompany.musicapp.form;
 
 import com.mycompany.musicapp.MusicApp;
+import com.mycompany.musicapp.model.Model_User;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -8,6 +9,7 @@ import java.awt.RenderingHints;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import com.mycompany.musicapp.model.Model_User;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -29,15 +31,16 @@ public class Bottom extends javax.swing.JPanel {
     private boolean isPlaying = false;
     private boolean isLike;
     int ChangeSongID;
+    int user;
 
     public Bottom() {
         initComponents();
         setOpaque(false);
+
         //slider1 = (Slider) new JSlider(0, 100, 0);
         //slider1.setMajorTickSpacing(10);
         // slider1.setPaintTicks(true);
         //slider1.setPaintLabels(true);
-
     }
 
     String musicTest = "";
@@ -342,10 +345,12 @@ public class Bottom extends javax.swing.JPanel {
         // You need to get the actual SongID from somewhere
         if (isLike) {
             updateLike(ChangeSongID, 0);
+            //MusicApp.deleteFavorite(UserID, ChangeSongID);
 
         } else {
             updateLike(ChangeSongID, 1);
             // Update like to 1 (liked)
+            //MusicApp.addFavorite(UserID, ChangeSongID);
         }
 
     }//GEN-LAST:event_btn_likeMouseClicked

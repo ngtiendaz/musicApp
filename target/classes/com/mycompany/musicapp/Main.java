@@ -76,9 +76,9 @@ public class Main extends javax.swing.JFrame {
                 case 7 ->
                     setForm(library);
                 case 8 -> {
-                    int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát chương trình?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
+                    int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất tài khoản này ?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
-
+                        bottom1.stopMusic();
                         Login_Main login = new Login_Main();
                         setVisible(false);
                         login.setVisible(true);
@@ -251,6 +251,10 @@ public class Main extends javax.swing.JFrame {
             nextCategory.updateCategoryinfo(category.getImagePathCategory(), category.getTitleCategory(), category.getCategoryID());
         });
         nextCategory.setEventSongSelected((Model_Song song) -> {
+            Songs = song;
+            bottom1.updateSongInfo(song.getSongID(), song.getImagePathSong(), song.getTitleSong(), song.getNameArtist(), song.getAudioSrc(), song.getLike());
+        });
+        profile.setEventSongSelected((Model_Song song) -> {
             Songs = song;
             bottom1.updateSongInfo(song.getSongID(), song.getImagePathSong(), song.getTitleSong(), song.getNameArtist(), song.getAudioSrc(), song.getLike());
         });

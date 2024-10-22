@@ -1,11 +1,14 @@
 package com.mycompany.musicapp;
 
 import com.mycompany.musicapp.form.Form_Home;
+import com.mycompany.musicapp.formAdmin.Form_AdminProfile;
 import com.mycompany.musicapp.formAdmin.Form_Albums;
 import com.mycompany.musicapp.formAdmin.Form_Artist;
 import com.mycompany.musicapp.formAdmin.Form_Category;
 import com.mycompany.musicapp.formAdmin.Form_Songs;
+import com.mycompany.musicapp.formAdmin.Form_ThongKe;
 import com.mycompany.musicapp.formAdmin.Form_User;
+import com.mycompany.musicapp.model.Model_User;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
@@ -16,9 +19,15 @@ public class Main_Admin extends javax.swing.JFrame {
     private Form_Category Category;
     private Form_Artist Artist;
     private Form_User User;
+    private Form_ThongKe thongke;
+    private Form_AdminProfile profile;
 
-    public Main_Admin() {
+    private static Model_User user;
+
+    public Main_Admin(Model_User user) {
         initComponents();
+        profile = new Form_AdminProfile();
+        thongke = new Form_ThongKe();
         Song = new Form_Songs();
         Album = new Form_Albums();
         Artist = new Form_Artist();
@@ -38,9 +47,14 @@ public class Main_Admin extends javax.swing.JFrame {
                     setForm(Category);
                 case 4 ->
                     setForm(User);
-
+                case 6 ->
+                    setForm(thongke);
+                case 7 -> {
+                    setForm(profile);
+                    profile.updateUser(user);
+                }
                 case 8 -> {
-                    int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát chương trình?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
+                    int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất tài khoản này ?", "Xác nhận thoát", JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
                         Login_Main login = new Login_Main();
                         setVisible(false);
@@ -129,7 +143,7 @@ public class Main_Admin extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main_Admin().setVisible(true);
+                new Main_Admin(user).setVisible(true);
             }
         });
     }

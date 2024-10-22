@@ -2,6 +2,7 @@ com\mycompany\musicapp\form\Bottom$3.class
 com\mycompany\musicapp\formAdmin\Form_Songs$1.class
 com\mycompany\musicapp\form\Form_Add$6.class
 com\mycompany\musicapp\form\Form_Next_Category.class
+com\mycompany\musicapp\formAdmin\Form_Category$6.class
 com\mycompany\musicapp\formAdmin\Form_Albums$3.class
 com\mycompany\musicapp\formAdmin\Form_Albums.class
 com\mycompany\musicapp\list\ListSong_H$1.class
@@ -16,6 +17,7 @@ com\mycompany\musicapp\formAdmin\Form_User$4.class
 com\mycompany\musicapp\item\ItemUser.class
 com\mycompany\musicapp\formAdmin\Form_Category.class
 com\mycompany\musicapp\list\ListArtist$2.class
+com\mycompany\musicapp\formAdmin\Form_Category$5.class
 com\mycompany\musicapp\formAdmin\Form_Artist$5.class
 com\mycompany\musicapp\form\Form_Add.class
 com\mycompany\musicapp\item\ItemAlbum$1.class
@@ -37,6 +39,7 @@ com\mycompany\musicapp\form\Form_Add$2.class
 com\mycompany\musicapp\list\ListAlbum$1.class
 com\mycompany\musicapp\model\Model_Artist.class
 com\mycompany\musicapp\formAdmin\Form_User$5.class
+com\mycompany\musicapp\formAdmin\Form_AdminProfile.class
 com\mycompany\musicapp\formAdmin\Admin_Menu$2.class
 com\mycompany\musicapp\MusicApp.class
 com\mycompany\musicapp\form\Form_Add$5.class
@@ -76,6 +79,7 @@ com\mycompany\musicapp\form\Form_Find$2.class
 com\mycompany\musicapp\formAdmin\Admin_Menu.class
 com\mycompany\musicapp\form\Menu$1.class
 com\mycompany\musicapp\form\Form_Next_Album$1.class
+com\mycompany\musicapp\formAdmin\Form_Category$3.class
 com\mycompany\musicapp\item\ItemCategory$1.class
 com\mycompany\musicapp\form\Bottom.class
 com\mycompany\musicapp\event\EventAlbumSelected.class
@@ -106,6 +110,7 @@ com\mycompany\musicapp\item\ItemSong_H$1.class
 com\mycompany\musicapp\form\Form_Next_Artist$1.class
 com\mycompany\musicapp\formAdmin\Form_User$6.class
 com\mycompany\musicapp\formAdmin\Form_Songs$4.class
+com\mycompany\musicapp\formAdmin\Form_Category$4.class
 com\mycompany\musicapp\formAdmin\Form_Songs$8.class
 com\mycompany\musicapp\item\ItemArtist$1.class
 com\mycompany\musicapp\form\Form_Next_Album.class
@@ -116,11 +121,14 @@ com\mycompany\musicapp\list\ListArtist_Ngang.class
 com\mycompany\musicapp\list\ListSong_V$1.class
 com\mycompany\musicapp\list\ListMenu$3.class
 com\mycompany\musicapp\formAdmin\Form_Artist$3.class
+com\mycompany\musicapp\formAdmin\Form_Category$2.class
 com\mycompany\musicapp\form\Form_Add$7.class
 com\mycompany\musicapp\formAdmin\Form_User.class
 com\mycompany\musicapp\list\ListAlbum_Ngang$2.class
 com\mycompany\musicapp\Main_Admin$1.class
+com\mycompany\musicapp\formAdmin\Form_Category$1.class
 com\mycompany\musicapp\form\Menu.class
+com\mycompany\musicapp\formAdmin\Form_ThongKe.class
 com\mycompany\musicapp\model\Model_Category.class
 com\mycompany\musicapp\formAdmin\Form_Songs$6.class
 com\mycompany\musicapp\list\ListMenu$2.class
