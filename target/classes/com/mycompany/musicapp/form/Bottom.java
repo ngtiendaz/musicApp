@@ -31,7 +31,8 @@ public class Bottom extends javax.swing.JPanel {
     private boolean isPlaying = false;
     private boolean isLike;
     int ChangeSongID;
-    int user;
+    private Model_User user;
+    int UserID;
 
     public Bottom() {
         initComponents();
@@ -54,6 +55,13 @@ public class Bottom extends javax.swing.JPanel {
             isLike = false;
             btn_like.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\like.png"));
         }
+    }
+
+    public void updateUser(Model_User user) {
+        this.user = user;
+        UserID = user.getUserID();
+        lb_share.setText(String.valueOf(UserID));
+
     }
 
     public void updateSongInfo(int SongID, String imagePath, String nameSong, String nameArtist, String audioSrc, int Like) {
@@ -190,7 +198,7 @@ public class Bottom extends javax.swing.JPanel {
         lbNameMusic = new javax.swing.JLabel();
         lbNameArtist = new javax.swing.JLabel();
         slider1 = new com.mycompany.musicapp.swing.Slider();
-        jLabel4 = new javax.swing.JLabel();
+        lb_share = new javax.swing.JLabel();
         btn_back = new javax.swing.JLabel();
         btn_play = new javax.swing.JLabel();
         btn_skip = new javax.swing.JLabel();
@@ -234,8 +242,8 @@ public class Bottom extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/share.png"))); // NOI18N
+        lb_share.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_share.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/share.png"))); // NOI18N
 
         btn_back.setForeground(new java.awt.Color(255, 255, 255));
         btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/skiptostart.png"))); // NOI18N
@@ -285,45 +293,42 @@ public class Bottom extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
                 .addComponent(btn_like)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(lb_share)
                 .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbNameMusic)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbNameArtist))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbNameMusic)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbNameArtist))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lb_totalTime)
-                                    .addComponent(lb_elapsed)))
-                            .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21))
+                            .addComponent(lb_totalTime)
+                            .addComponent(lb_elapsed)))
+                    .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_play, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_play, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
-                                        .addComponent(btn_skip)))
-                                .addGap(4, 4, 4)
-                                .addComponent(slider1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(btn_like))))))
-                .addContainerGap())
+                                .addGap(11, 11, 11)
+                                .addComponent(btn_skip)))
+                        .addGap(4, 4, 4)
+                        .addComponent(slider1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lb_share)
+                            .addComponent(btn_like)))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -345,12 +350,14 @@ public class Bottom extends javax.swing.JPanel {
         // You need to get the actual SongID from somewhere
         if (isLike) {
             updateLike(ChangeSongID, 0);
-            //MusicApp.deleteFavorite(UserID, ChangeSongID);
+            MusicApp.deleteFavorite(UserID, ChangeSongID);
 
         } else {
-            updateLike(ChangeSongID, 1);
+            // updateLike(ChangeSongID, 1);
             // Update like to 1 (liked)
-            //MusicApp.addFavorite(UserID, ChangeSongID);
+
+            updateLike(ChangeSongID, 1);
+            MusicApp.addFavorite(UserID, ChangeSongID);
         }
 
     }//GEN-LAST:event_btn_likeMouseClicked
@@ -389,11 +396,11 @@ public class Bottom extends javax.swing.JPanel {
     private javax.swing.JLabel btn_like;
     private javax.swing.JLabel btn_play;
     private javax.swing.JLabel btn_skip;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbImage;
     private javax.swing.JLabel lbNameArtist;
     private javax.swing.JLabel lbNameMusic;
     private javax.swing.JLabel lb_elapsed;
+    private javax.swing.JLabel lb_share;
     private javax.swing.JLabel lb_totalTime;
     private com.mycompany.musicapp.swing.Slider slider1;
     // End of variables declaration//GEN-END:variables

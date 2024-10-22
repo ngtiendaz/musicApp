@@ -4,13 +4,16 @@ import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.event.EventSongLikeChanged;
 import com.mycompany.musicapp.event.EventSongSelected;
 import com.mycompany.musicapp.model.Model_Song;
+import com.mycompany.musicapp.model.Model_User;
 import com.mycompany.musicapp.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -18,9 +21,11 @@ import javax.swing.SwingUtilities;
 public class Form_FavoriteSong extends javax.swing.JPanel {
 
     int Like = 1;
+    int UserID;
     private static Model_Song selectedSong;
     private EventSongSelected eventSongSelected;
     private EventSongLikeChanged eventSongLikeChanged;
+    private Model_User user;
 
     public EventSongLikeChanged getEventSongLikeChanged() {
         return eventSongLikeChanged;
@@ -58,12 +63,11 @@ public class Form_FavoriteSong extends javax.swing.JPanel {
 
         ((DefaultListModel) listSong_V1.getModel()).removeAllElements();
         SwingUtilities.invokeLater(() -> {
-            List<Model_Song> songs = MusicApp.Favorite(Like);
+            List<Model_Song> songs = MusicApp.getFavoriteSongsByUser(UserID);
             for (Model_Song song : songs) {
                 listSong_V1.addItem(song);
             }
         });
-
         listSong_V1.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 setSelectedSong((Model_Song) listSong_V1.getSelectedValue());
@@ -76,10 +80,22 @@ public class Form_FavoriteSong extends javax.swing.JPanel {
 
     }
 
+    public void updateUser(Model_User user) {
+        this.user = user;
+        lb_nameUser.setText(user.getNameUser() + ".");
+        ImageIcon imageIcon = new ImageIcon(user.getImagePathUser());
+        Image image = imageIcon.getImage(); // Lấy đối tượng Image từ ImageIcon
+        Image scaledImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(scaledImage);
+        lb_avtUser.setIcon(imageIcon);
+        UserID = user.getUserID();
+
+    }
+
     public void updateSong() {
         ((DefaultListModel) listSong_V1.getModel()).removeAllElements();
         SwingUtilities.invokeLater(() -> {
-            List<Model_Song> songs = MusicApp.Favorite(Like);
+            List<Model_Song> songs = MusicApp.getFavoriteSongsByUser(UserID);
             for (Model_Song song : songs) {
                 listSong_V1.addItem(song);
             }
@@ -105,17 +121,18 @@ public class Form_FavoriteSong extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         scrollFavoriteSong = new javax.swing.JScrollPane();
         listSong_V1 = new com.mycompany.musicapp.list.ListSong_V();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lb_avtUser = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         loadData = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lb_nameUser = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 70)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Bài hát yêu thích\n");
 
@@ -124,12 +141,8 @@ public class Form_FavoriteSong extends javax.swing.JPanel {
         listSong_V1.setBorder(null);
         scrollFavoriteSong.setViewportView(listSong_V1);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/export3.png"))); // NOI18N
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/newtim.png"))); // NOI18N
+        lb_avtUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_avtUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/newtim.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -142,47 +155,57 @@ public class Form_FavoriteSong extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Playlist của");
+
+        lb_nameUser.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        lb_nameUser.setForeground(new java.awt.Color(255, 255, 255));
+        lb_nameUser.setText("Daz.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(20, 20, 20)
+                .addComponent(lb_avtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(20, 20, 20))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lb_nameUser)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                         .addComponent(loadData)
-                        .addGap(35, 35, 35))))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(scrollFavoriteSong)
-                .addContainerGap())
+                        .addGap(40, 40, 40))))
+            .addComponent(scrollFavoriteSong)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
+                    .addComponent(lb_avtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(loadData)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(loadData))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)))
-                .addComponent(scrollFavoriteSong, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lb_nameUser)))))
+                .addGap(49, 49, 49)
+                .addComponent(scrollFavoriteSong, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -193,8 +216,9 @@ public class Form_FavoriteSong extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lb_avtUser;
+    private javax.swing.JLabel lb_nameUser;
     private com.mycompany.musicapp.list.ListSong_V listSong_V1;
     private javax.swing.JLabel loadData;
     private javax.swing.JScrollPane scrollFavoriteSong;

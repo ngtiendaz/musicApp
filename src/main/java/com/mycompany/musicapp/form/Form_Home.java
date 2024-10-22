@@ -1,5 +1,6 @@
 package com.mycompany.musicapp.form;
 
+import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.event.EventAlbumSelected;
 import com.mycompany.musicapp.event.EventArtistSelected;
 import com.mycompany.musicapp.event.EventCategorySelected;
@@ -14,8 +15,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class Form_Home extends javax.swing.JPanel {
 

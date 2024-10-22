@@ -61,11 +61,11 @@ public class Form_AdminProfile extends javax.swing.JPanel {
         lb_nameuser.setForeground(new java.awt.Color(255, 255, 255));
         lb_nameuser.setText("NameUser");
 
-        lb_email.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        lb_email.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         lb_email.setForeground(new java.awt.Color(255, 255, 255));
         lb_email.setText("Email@gmail.com");
 
-        lb_role.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lb_role.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lb_role.setForeground(new java.awt.Color(255, 255, 255));
         lb_role.setText("Role");
 

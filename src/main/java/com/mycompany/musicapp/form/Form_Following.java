@@ -3,13 +3,16 @@ package com.mycompany.musicapp.form;
 import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.event.EventArtistSelected;
 import com.mycompany.musicapp.model.Model_Artist;
+import com.mycompany.musicapp.model.Model_User;
 import com.mycompany.musicapp.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -17,6 +20,8 @@ import javax.swing.SwingUtilities;
 public class Form_Following extends javax.swing.JPanel {
 
     int Flow = 1;
+    int UserID;
+    private Model_User user;
     private EventArtistSelected eventArtistSelected;
     private static Model_Artist selectedArtist;
 
@@ -48,12 +53,11 @@ public class Form_Following extends javax.swing.JPanel {
 
         ((DefaultListModel) listArtist_Ngang.getModel()).removeAllElements();
         SwingUtilities.invokeLater(() -> {
-            List<Model_Artist> artists = MusicApp.Following(Flow);
+            List<Model_Artist> artists = MusicApp.getFollowedArtistsByUser(UserID);
             for (Model_Artist artist : artists) {
                 listArtist_Ngang.addItem(artist);
             }
         });
-
         listArtist_Ngang.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 setSelectedArtist((Model_Artist) listArtist_Ngang.getSelectedValue());
@@ -62,6 +66,18 @@ public class Form_Following extends javax.swing.JPanel {
                 }
             }
         });
+
+    }
+
+    public void updateUser(Model_User user) {
+        this.user = user;
+        lb_nameUser.setText(user.getNameUser() + ".");
+        ImageIcon imageIcon = new ImageIcon(user.getImagePathUser());
+        Image image = imageIcon.getImage(); // Lấy đối tượng Image từ ImageIcon
+        Image scaledImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(scaledImage);
+        lb_avtUser.setIcon(imageIcon);
+        UserID = user.getUserID();
 
     }
 
@@ -84,9 +100,11 @@ public class Form_Following extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         scrollArtist = new javax.swing.JScrollPane();
         listArtist_Ngang = new com.mycompany.musicapp.list.ListArtist_Ngang();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         loadData = new javax.swing.JLabel();
+        lb_avtUser = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lb_nameUser = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -95,7 +113,7 @@ public class Form_Following extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nghệ Sĩ Đang Theo Dõi\n");
+        jLabel1.setText("Nghệ Sĩ Yêu Thích ");
 
         scrollArtist.setBorder(null);
         scrollArtist.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -103,10 +121,6 @@ public class Form_Following extends javax.swing.JPanel {
 
         listArtist_Ngang.setBorder(null);
         scrollArtist.setViewportView(listArtist_Ngang);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/export3.png"))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,6 +133,17 @@ public class Form_Following extends javax.swing.JPanel {
             }
         });
 
+        lb_avtUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_avtUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/addimg2.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("dành riêng cho");
+
+        lb_nameUser.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        lb_nameUser.setForeground(new java.awt.Color(255, 255, 255));
+        lb_nameUser.setText("Daz.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,36 +151,47 @@ public class Form_Following extends javax.swing.JPanel {
             .addComponent(scrollArtist)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
+                .addComponent(lb_avtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loadData)
-                    .addComponent(jLabel2))
-                .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lb_nameUser)))
+                .addContainerGap(95, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(loadData)
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel1))
-                    .addComponent(jLabel2))
-                .addGap(0, 0, 0)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lb_nameUser)))
+                    .addComponent(lb_avtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addComponent(loadData)
                 .addGap(18, 18, 18)
-                .addComponent(scrollArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(scrollArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadDataMouseClicked
         ((DefaultListModel) listArtist_Ngang.getModel()).removeAllElements();
         SwingUtilities.invokeLater(() -> {
-            List<Model_Artist> artists = MusicApp.Following(Flow);
+            List<Model_Artist> artists = MusicApp.getFollowedArtistsByUser(UserID);
             for (Model_Artist artist : artists) {
                 listArtist_Ngang.addItem(artist);
             }
@@ -166,6 +202,8 @@ public class Form_Following extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lb_avtUser;
+    private javax.swing.JLabel lb_nameUser;
     private com.mycompany.musicapp.list.ListArtist_Ngang listArtist_Ngang;
     private javax.swing.JLabel loadData;
     private javax.swing.JScrollPane scrollArtist;

@@ -3,6 +3,7 @@ package com.mycompany.musicapp.form;
 import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.event.EventSongSelected;
 import com.mycompany.musicapp.model.Model_Song;
+import com.mycompany.musicapp.model.Model_User;
 import com.mycompany.musicapp.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -35,6 +36,9 @@ public class Form_Next_Artist extends javax.swing.JPanel {
     }
 
     int ID;
+    int UserID;
+    private Model_User user;
+
     private static Model_Song selectedSong;
     private EventSongSelected eventSongSelected;
     private boolean isFlow;
@@ -59,6 +63,12 @@ public class Form_Next_Artist extends javax.swing.JPanel {
 
     }
 
+    public void updateUser(Model_User user) {
+        this.user = user;
+        UserID = user.getUserID();
+
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -80,6 +90,7 @@ public class Form_Next_Artist extends javax.swing.JPanel {
             lb_imgArtist.setIcon(imageIcon);
         }
         ID = ArtistID;
+
         if (Name != null && !Name.isEmpty()) {
             lb_nameArtist.setText(Name + ".");
         }
@@ -157,14 +168,14 @@ public class Form_Next_Artist extends javax.swing.JPanel {
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lb_nameArtist)
-                                .addGap(30, 501, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_follow)
-                                .addGap(44, 44, 44))))
+                                .addGap(44, 44, 44))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lb_nameArtist)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel4)
@@ -197,10 +208,13 @@ public class Form_Next_Artist extends javax.swing.JPanel {
             // Nếu đang follow, bỏ follow
             MusicApp.updateFlow(ID, 0);
             btn_follow.setText("Theo dõi");
+            MusicApp.deleteFollowers(UserID, ID);
+
             isFlow = false;
         } else {
             MusicApp.updateFlow(ID, 1);
             btn_follow.setText("Đang theo dõi");
+            MusicApp.addFollowers(UserID, ID);
             isFlow = true;
         }
     }//GEN-LAST:event_btn_followActionPerformed

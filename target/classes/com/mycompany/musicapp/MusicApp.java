@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MusicApp {
 
@@ -73,6 +75,22 @@ public class MusicApp {
 
         return new Model_Artist(ArtistID, Name, ImagePathArtists, Flow);
 
+    }
+
+    public static void updateLike(int SongID, int Like) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("UPDATE songs SET `Like` = ? WHERE SongID = ?")) {
+            stmt.setInt(1, Like);
+            stmt.setInt(2, SongID);
+            stmt.executeUpdate();
+            if (eventSongLikeChanged != null) {
+                Model_Song song = getSongById(SongID);
+                if (song != null) {
+                    eventSongLikeChanged.changed(song);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Connection conn;
@@ -399,54 +417,6 @@ public class MusicApp {
 
     }
 
-    public static List<Model_Song> Favorite(int Like) {
-        List<Model_Song> songList = new ArrayList<>();
-        try {
-            Connection conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM songs JOIN artists ON songs.ArtistID = artists.ArtistID WHERE `Like` LIKE 1");
-            // stmt.setString(1, "%" + Like + "%");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                songList.add(mapResultSetToSong(rs));
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return songList;
-
-    }
-
-    public static List<Model_Artist> Following(int Flow) {
-        List<Model_Artist> artistList = new ArrayList<>();
-        try {
-            Connection conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `artists` WHERE Flow LIKE ?");
-            stmt.setString(1, "%" + Flow + "%");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                artistList.add(mapResultSetToArtist(rs));
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return artistList;
-
-    }
-
-    public static void updateLike(int SongID, int Like) {
-        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("UPDATE songs SET `Like` = ? WHERE SongID = ?")) {
-            stmt.setInt(1, Like);
-            stmt.setInt(2, SongID);
-            stmt.executeUpdate();
-            if (eventSongLikeChanged != null) {
-                Model_Song song = getSongById(SongID);
-                eventSongLikeChanged.changed(song);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Model_Song getSongById(int SongID) {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM songs JOIN artists ON songs.ArtistID = artists.ArtistID WHERE songs.SongID = ?")) {
             stmt.setInt(1, SongID);
@@ -596,6 +566,139 @@ public class MusicApp {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM favorites WHERE UserID = ? AND SongID = ?")) {
             stmt.setInt(1, UserID);
             stmt.setInt(2, SongID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Model_Song> getFavoriteSongsByUser(int UserID) {
+        List<Model_Song> songList = new ArrayList<>();
+        String sql = "SELECT s.SongID, s.CategoryID, s.AlbumID, s.ArtistID, s.ImagePathSong, s.TitleSong, s.AudioSrc, s.Like, a.Name "
+                + "FROM favorites f "
+                + "JOIN songs s ON f.SongID = s.SongID "
+                + "JOIN artists a ON s.ArtistID = a.ArtistID "
+                + "WHERE f.UserID = ?";
+
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Thiết lập giá trị userId
+            stmt.setInt(1, UserID);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int SongID = rs.getInt("SongID");
+                int CategoryID = rs.getInt("CategoryID");
+                int AlbumID = rs.getInt("AlbumID");
+                int ArtistID = rs.getInt("ArtistID");
+                String ImagePathSong = rs.getString("ImagePathSong");
+                String TitleSong = rs.getString("TitleSong");
+                String AudioSrc = rs.getString("AudioSrc");
+                int Like = rs.getInt("Like");
+                String NameArtist = rs.getString("Name");
+
+                // Tạo đối tượng Model_Song và thêm vào danh sách
+                Model_Song song = new Model_Song(SongID, CategoryID, AlbumID, ArtistID, ImagePathSong, TitleSong, AudioSrc, Like, NameArtist);
+                songList.add(song);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return songList;
+    }
+
+    public static void updateLikedSongsForUser(int userId) {
+        String sql = "UPDATE songs s "
+                + "JOIN favorites f ON s.SongID = f.SongID "
+                + "SET s.Like = 1 "
+                + "WHERE f.UserID = ?";
+
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Đặt giá trị cho tham số UserID
+            stmt.setInt(1, userId);
+
+            // Thực thi câu lệnh cập nhật
+            int rowsAffected = stmt.executeUpdate();
+
+            // In ra số dòng đã cập nhật
+            System.out.println("Rows updated: " + rowsAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MusicApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void updateFollowForUser(int userId) {
+        String sql = "UPDATE artists a "
+                + "JOIN followers f ON a.ArtistID = f.ArtistID "
+                + "SET a.Flow = 1 "
+                + "WHERE f.UserID = ?";
+
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Đặt giá trị cho tham số UserID
+            stmt.setInt(1, userId);
+
+            // Thực thi câu lệnh cập nhật
+            int rowsAffected = stmt.executeUpdate();
+
+            // In ra số dòng đã cập nhật
+            System.out.println("Rows updated: " + rowsAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MusicApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static List<Model_Artist> getFollowedArtistsByUser(int UserID) {
+        List<Model_Artist> artistList = new ArrayList<>();
+        String sql = "SELECT a.ArtistID, a.Name, a.ImagePathArtists,a.Flow "
+                + "FROM followers f "
+                + "JOIN artists a ON f.ArtistID = a.ArtistID "
+                + "WHERE f.UserID = ?";
+
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Thiết lập giá trị UserID
+            stmt.setInt(1, UserID);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int ArtistID = rs.getInt("ArtistID");
+                String Name = rs.getString("Name");
+
+                String ImagePathArtist = rs.getString("ImagePathArtists");
+                int Flow = rs.getInt("Flow");
+
+                // Tạo đối tượng Model_Artist và thêm vào danh sách
+                Model_Artist artist = new Model_Artist(ArtistID, Name, ImagePathArtist, Flow);
+                artistList.add(artist);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return artistList;
+    }
+
+    public static void addFollowers(int UserID, int ArtistID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO followers (UserID, ArtistID) " + "VALUES (?, ?)")) {
+            stmt.setInt(1, UserID);
+            stmt.setInt(2, ArtistID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteFollowers(int UserID, int ArtistID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM followers WHERE UserID = ? AND ArtistID = ?")) {
+            stmt.setInt(1, UserID);
+            stmt.setInt(2, ArtistID);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

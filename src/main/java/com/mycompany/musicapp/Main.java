@@ -43,6 +43,8 @@ public class Main extends javax.swing.JFrame {
     public Main(Model_User user) {
         initComponents();
         init();
+        MusicApp.updateLikedSongsForUser(user.getUserID());
+        MusicApp.updateFollowForUser(user.getUserID());
         nextCategory = new Form_Next_Category();
         nextArtist = new Form_Next_Artist();
         profile = new Form_Profile();
@@ -64,9 +66,12 @@ public class Main extends javax.swing.JFrame {
                     setForm(find);
                 case 2 -> {
                     setForm(songfavo);
+                    songfavo.updateUser(user);
                 }
-                case 3 ->
+                case 3 -> {
                     setForm(following);
+                    following.updateUser(user);
+                }
                 case 4 -> {
                     setForm(profile);
                     profile.updateUser(user);
@@ -90,6 +95,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
         setForm(home);
+        bottom1.updateUser(user);
+        nextArtist.updateUser(user);
         setFormFrame();
 
     }

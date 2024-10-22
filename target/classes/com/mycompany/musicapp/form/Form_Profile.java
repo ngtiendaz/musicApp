@@ -109,9 +109,9 @@ public class Form_Profile extends javax.swing.JPanel {
         edt_email.setForeground(new java.awt.Color(255, 255, 255));
         edt_email.setText("Email@gmail.com");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/ad_sua.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/pencil.png"))); // NOI18N
 
-        lb_role.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lb_role.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lb_role.setForeground(new java.awt.Color(255, 255, 255));
         lb_role.setText("Role");
 
@@ -171,7 +171,7 @@ public class Form_Profile extends javax.swing.JPanel {
                         .addComponent(edt_name)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(edt_email)))
-                .addGap(12, 12, 12)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
                 .addComponent(scollSong, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
