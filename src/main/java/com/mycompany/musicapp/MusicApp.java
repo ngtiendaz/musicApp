@@ -11,10 +11,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 public class MusicApp {
 
@@ -705,4 +714,173 @@ public class MusicApp {
         }
     }
 
+    public static double[] getSongLikesByCategoriesForMonth(int month) {
+        double[] categoryLikes = new double[4]; // Mảng chứa số lượng bài hát được thích của 4 thể loại
+
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "SELECT c.TitleCategory, COUNT(f.favoriteID) AS FavoriteCount "
+                + "FROM favorites f "
+                + "JOIN songs s ON f.SongID = s.SongID "
+                + "JOIN category c ON s.CategoryID = c.CategoryID "
+                + "WHERE MONTH(f.created_at) = ? "
+                + // Điều kiện lọc theo tháng cụ thể
+                "GROUP BY c.TitleCategory")) {
+
+            // Gán giá trị tháng vào PreparedStatement
+            stmt.setInt(1, month);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String category = rs.getString("TitleCategory");
+                double count = rs.getDouble("FavoriteCount");
+
+                // Lưu số lượng bài hát yêu thích tương ứng với từng thể loại
+                switch (category) {
+                    case "Rap":
+                        categoryLikes[0] = count;
+                        break;
+                    case "Ballad":
+                        categoryLikes[1] = count;
+                        break;
+                    case "POP":
+                        categoryLikes[2] = count;
+                        break;
+                    case "Indie":
+                        categoryLikes[3] = count;
+                        break;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categoryLikes; // Trả về mảng số lượng bài hát đã được thích của 4 thể loại
+    }
+
+    public static List<Model_Song> getRecentlyPlayedSongsByUser(int userID) {
+        List<Model_Song> songList = new ArrayList<>();
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "SELECT s.SongID, s.CategoryID, s.AlbumID, s.ArtistID, s.ImagePathSong, s.TitleSong, s.AudioSrc, s.Like, a.Name, p.played_at "
+                + "FROM song_plays p "
+                + "JOIN songs s ON p.SongID = s.SongID "
+                + "JOIN artists a ON s.ArtistID = a.ArtistID "
+                + "WHERE p.UserID = ? "
+                + // Thêm điều kiện lọc theo UserID
+                "ORDER BY p.played_at DESC")) {
+
+            // Gán giá trị userID vào PreparedStatement
+            stmt.setInt(1, userID);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int SongID = rs.getInt("SongID");
+                int CategoryID = rs.getInt("CategoryID");
+                int AlbumID = rs.getInt("AlbumID");
+                int ArtistID = rs.getInt("ArtistID");
+                String ImagePathSong = rs.getString("ImagePathSong");
+                String TitleSong = rs.getString("TitleSong");
+                String AudioSrc = rs.getString("AudioSrc");
+                int Like = rs.getInt("Like");
+                String NameArtist = rs.getString("Name");
+
+                // Khởi tạo đối tượng Model_Song với các thông tin lấy từ kết quả truy vấn
+                Model_Song song = new Model_Song(SongID, CategoryID, AlbumID, ArtistID, ImagePathSong, TitleSong, AudioSrc, Like, NameArtist);
+                songList.add(song);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return songList;
+    }
+
+    private static CellStyle createStyleForHeader(XSSFSheet sheet) {
+        // Create font
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12); // font size
+        font.setColor(IndexedColors.WHITE.getIndex()); // text color
+
+        // Create CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
+        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setWrapText(true);
+        return cellStyle;
+    }
+
+    public static List<Model_Song> getTopLikedSongs(int limit) {
+        List<Model_Song> songList = new ArrayList<>();
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "SELECT s.SongID, s.CategoryID, s.AlbumID, s.ArtistID, s.ImagePathSong, s.TitleSong, s.AudioSrc, COUNT(f.favoriteID) AS TotalLikes, a.Name "
+                + "FROM songs s "
+                + "JOIN favorites f ON s.SongID = f.SongID "
+                + "JOIN artists a ON s.ArtistID = a.ArtistID "
+                + "GROUP BY s.SongID "
+                + "ORDER BY TotalLikes DESC "
+                + // Sắp xếp bài hát theo tổng lượt thích giảm dần
+                "LIMIT ?")) { // Giới hạn số lượng bài hát trả về
+
+            // Thiết lập giới hạn số lượng bài hát cần trả về
+            stmt.setInt(1, limit);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int SongID = rs.getInt("SongID");
+                int CategoryID = rs.getInt("CategoryID");
+                int AlbumID = rs.getInt("AlbumID");
+                int ArtistID = rs.getInt("ArtistID");
+                String ImagePathSong = rs.getString("ImagePathSong");
+                String TitleSong = rs.getString("TitleSong");
+                String AudioSrc = rs.getString("AudioSrc");
+                int TotalLikes = rs.getInt("TotalLikes"); // Lấy tổng lượt thích từ bảng favorites
+                String NameArtist = rs.getString("Name");
+
+                // Tạo đối tượng Model_Song và thêm vào danh sách
+                Model_Song song = new Model_Song(SongID, CategoryID, AlbumID, ArtistID, ImagePathSong, TitleSong, AudioSrc, TotalLikes, NameArtist);
+                songList.add(song);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return songList;
+    }
+
+    public static List<Model_Artist> getTopFollowedArtists(int limit) {
+        List<Model_Artist> artistsList = new ArrayList<>();
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "SELECT a.ArtistID, a.Name, a.ImagePathArtists, a.Flow, COUNT(f.followID) AS TotalFollows "
+                + "FROM artists a "
+                + "JOIN followers f ON a.ArtistID = f.ArtistID "
+                + "GROUP BY a.ArtistID "
+                + "ORDER BY TotalFollows DESC "
+                + // Sắp xếp nghệ sĩ theo tổng số lượt theo dõi giảm dần
+                "LIMIT ?")) { // Giới hạn số lượng nghệ sĩ trả về
+
+            // Thiết lập giới hạn số lượng nghệ sĩ cần trả về
+            stmt.setInt(1, limit);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int ArtistID = rs.getInt("ArtistID");
+                String Name = rs.getString("Name");
+                String ImagePathArtists = rs.getString("ImagePathArtists");
+                // int Flow = rs.getInt("Flow");
+                int TotalFollows = rs.getInt("TotalFollows"); // Lấy tổng số lượt theo dõi
+
+                // Tạo đối tượng Model_Artist và thêm vào danh sách
+                Model_Artist artist = new Model_Artist(ArtistID, Name, ImagePathArtists, TotalFollows);
+                artistsList.add(artist);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return artistsList;
+    }
 }

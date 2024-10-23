@@ -3,6 +3,10 @@ package com.mycompany.musicapp.formAdmin;
 import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.model.CheckLoi;
 import com.mycompany.musicapp.model.Model_Category;
+import com.mycompany.musicapp.model.Model_Song;
+import com.mycompany.musicapp.print.FieldReportAlbum;
+import com.mycompany.musicapp.print.ParameterReportAlbum;
+import com.mycompany.musicapp.print.ReportManager;
 import com.mycompany.musicapp.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -10,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -22,6 +27,8 @@ import javax.swing.SwingUtilities;
 public class Form_Category extends javax.swing.JPanel {
 
     String imagePathCategory = "";
+    int CategoryID;
+    String TenCate;
 
     public Form_Category() {
         initComponents();
@@ -65,6 +72,8 @@ public class Form_Category extends javax.swing.JPanel {
         imageIcon = new ImageIcon(scaledImage);
         lb_imagePath.setIcon(imageIcon);
         imagePathCategory = category.getImagePathCategory();
+        CategoryID = category.getCategoryID();
+        TenCate = category.getTitleCategory();
     }
 
     @SuppressWarnings("unchecked")
@@ -84,6 +93,7 @@ public class Form_Category extends javax.swing.JPanel {
         lb_them = new javax.swing.JLabel();
         lb_sua = new javax.swing.JLabel();
         lb_xoa = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 51, 51));
         setMaximumSize(new java.awt.Dimension(800, 650));
@@ -164,6 +174,13 @@ public class Form_Category extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/download.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,7 +191,6 @@ public class Form_Category extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(themID)
@@ -190,17 +206,24 @@ public class Form_Category extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lb_xoa)
                                     .addComponent(lb_them)
-                                    .addComponent(lb_sua)))))
+                                    .addComponent(lb_sua)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30))
+                        .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addGap(10, 10, 10)
                 .addComponent(scrollCate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -324,11 +347,31 @@ public class Form_Category extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lb_xoaMouseClicked
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        try {
+            int tongBaiHat = 0;
+
+            List<Model_Song> songList = MusicApp.Category_Song(CategoryID);
+            ReportManager.getInstance().compileReport();
+            List<FieldReportAlbum> field = new ArrayList<>();
+            for (Model_Song song : songList) {
+                field.add(new FieldReportAlbum(song.getTitleSong(), song.getNameArtist()));
+                tongBaiHat += 1;
+            }
+//                field.add(new FieldReportHoaDon(LoaiPhong, soNgayO, tongTienPhong));
+            ParameterReportAlbum dataprint = new ParameterReportAlbum(TenCate, String.valueOf(tongBaiHat), field);
+            ReportManager.getInstance().printReportPayment(dataprint);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField edt_categoryID;
     private javax.swing.JTextField edt_timkiem;
     private javax.swing.JTextField edt_titleCate;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lb_imagePath;

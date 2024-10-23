@@ -76,7 +76,8 @@ public class Form_User extends javax.swing.JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Tạo một GradientPaint từ màu đầu đến màu cuối
-        GradientPaint gradient = new GradientPaint(0, 0, Color.decode("#000000"), getWidth(), getHeight(), Color.decode("#434343"));
+        GradientPaint gradient = new GradientPaint(0, 0, Color.decode("#000000"), getWidth(), getHeight(),
+                Color.decode("#434343"));
         g2d.setPaint(gradient);
 
         // Vẽ hình chữ nhật với màu gradient
@@ -84,7 +85,8 @@ public class Form_User extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         scrollUser = new javax.swing.JScrollPane();
@@ -181,7 +183,8 @@ public class Form_User extends javax.swing.JPanel {
         jLabel8.setText("ImagePath:");
 
         lb_imageUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_imageUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/addimg2.png"))); // NOI18N
+        lb_imageUser
+                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/addimg2.png"))); // NOI18N
         lb_imageUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lb_imageUserMouseClicked(evt);
@@ -193,79 +196,112 @@ public class Form_User extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollUser)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(themID)
-                                .addGap(71, 71, 71))
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(edt_email)
-                            .addComponent(edt_userID)
-                            .addComponent(edt_pass, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(edt_username, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
-                        .addComponent(lb_them)
-                        .addGap(18, 18, 18)
-                        .addComponent(lb_sua))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(42, 42, 42)
-                        .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(lb_xoa)
-                .addGap(30, 30, 30))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(scrollUser)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 290,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                layout.createSequentialGroup()
+                                                                        .addComponent(themID)
+                                                                        .addGap(71, 71, 71))
+                                                        .addComponent(jLabel5)
+                                                        .addComponent(jLabel6)
+                                                        .addComponent(jLabel7))
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(edt_email)
+                                                        .addComponent(edt_userID)
+                                                        .addComponent(edt_pass,
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(edt_username,
+                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 159,
+                                                                Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+                                                .createSequentialGroup()
+                                                .addComponent(jLabel10)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        174, Short.MAX_VALUE)
+                                                .addComponent(lb_them)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lb_sua))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                layout.createSequentialGroup()
+                                                        .addComponent(jLabel8)
+                                                        .addGap(42, 42, 42)
+                                                        .addComponent(lb_imageUser,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 100,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(lb_xoa)
+                                .addGap(30, 30, 30)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(themID)
-                            .addComponent(edt_userID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(edt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(edt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(edt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lb_xoa)
-                        .addComponent(lb_sua)
-                        .addComponent(lb_them)))
-                .addGap(20, 20, 20)
-                .addComponent(scrollUser, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(themID)
+                                                        .addComponent(edt_userID,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(29, 29, 29)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel5)
+                                                        .addComponent(edt_email, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(30, 30, 30)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel6)
+                                                        .addComponent(edt_pass, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(42, 42, 42)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel7)
+                                                        .addComponent(edt_username,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44,
+                                        Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel10))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lb_xoa)
+                                                        .addComponent(lb_sua)
+                                                        .addComponent(lb_them)))
+                                .addGap(20, 20, 20)
+                                .addComponent(scrollUser, javax.swing.GroupLayout.PREFERRED_SIZE, 318,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void edt_timkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edt_timkiemKeyReleased
+    private void edt_timkiemKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_edt_timkiemKeyReleased
         String text = edt_timkiem.getText().trim();
         ((DefaultListModel) listUser.getModel()).removeAllElements();
         SwingUtilities.invokeLater(() -> {
@@ -274,9 +310,9 @@ public class Form_User extends javax.swing.JPanel {
                 listUser.addItem(user);
             }
         });
-    }//GEN-LAST:event_edt_timkiemKeyReleased
+    }// GEN-LAST:event_edt_timkiemKeyReleased
 
-    private void lb_imageUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_imageUserMouseClicked
+    private void lb_imageUserMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lb_imageUserMouseClicked
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         if (fileChooser.showOpenDialog(Form_User.this) == JFileChooser.APPROVE_OPTION) {
@@ -288,9 +324,9 @@ public class Form_User extends javax.swing.JPanel {
             imageIcon = new ImageIcon(scaledImage);
             lb_imageUser.setIcon(imageIcon);
         }
-    }//GEN-LAST:event_lb_imageUserMouseClicked
+    }// GEN-LAST:event_lb_imageUserMouseClicked
 
-    private void lb_themMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_themMouseClicked
+    private void lb_themMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lb_themMouseClicked
         try {
             int UserID = Integer.parseInt(edt_userID.getText());
             String Email = edt_email.getText();
@@ -320,9 +356,9 @@ public class Form_User extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
         }
-    }//GEN-LAST:event_lb_themMouseClicked
+    }// GEN-LAST:event_lb_themMouseClicked
 
-    private void lb_suaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_suaMouseClicked
+    private void lb_suaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lb_suaMouseClicked
         try {
             int UserID = Integer.parseInt(edt_userID.getText());
             String Email = edt_email.getText();
@@ -346,12 +382,13 @@ public class Form_User extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
         }
-    }//GEN-LAST:event_lb_suaMouseClicked
+    }// GEN-LAST:event_lb_suaMouseClicked
 
-    private void lb_xoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_xoaMouseClicked
+    private void lb_xoaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lb_xoaMouseClicked
         try {
             int UserID = Integer.parseInt(edt_userID.getText());
-            int result = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa User này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa User này?", "Xác nhận xóa",
+                    JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 MusicApp.deleteUser(UserID);
                 JOptionPane.showMessageDialog(this, "Xóa User thành công!");
@@ -367,14 +404,14 @@ public class Form_User extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
         }
-    }//GEN-LAST:event_lb_xoaMouseClicked
+    }// GEN-LAST:event_lb_xoaMouseClicked
 
-    private void themIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themIDMouseClicked
+    private void themIDMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_themIDMouseClicked
         int ThemID = 0;
         List<Model_User> users = MusicApp.getAllUser();
         ThemID = users.size(); // Đếm số lượng người dùng trực tiếp
         edt_userID.setText(String.valueOf(ThemID + 2));
-    }//GEN-LAST:event_themIDMouseClicked
+    }// GEN-LAST:event_themIDMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField edt_email;

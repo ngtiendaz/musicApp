@@ -1,5 +1,6 @@
 package com.mycompany.musicapp.form;
 
+import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.event.EventSongSelected;
 import static com.mycompany.musicapp.form.Form_Find.setSelectedSong;
 import com.mycompany.musicapp.model.Model_Song;
@@ -10,13 +11,17 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class Form_Profile extends javax.swing.JPanel {
 
     private static Model_Song selectedSong;
+    int UserID;
     private EventSongSelected eventSongSelected;
 
     public static Model_Song getSelectedSong() {
@@ -39,6 +44,7 @@ public class Form_Profile extends javax.swing.JPanel {
 
     public Form_Profile() {
         initComponents();
+        init();
         JPanel p = new JPanel();
         p.setBackground(Color.BLACK);
         scollSong.setVerticalScrollBar(new ScrollBar());
@@ -79,6 +85,7 @@ public class Form_Profile extends javax.swing.JPanel {
         imageIcon = new ImageIcon(scaledImage);
         lb_imageUser.setIcon(imageIcon);
         lb_role.setText(user.getRole());
+        UserID = user.getUserID();
     }
 
     @SuppressWarnings("unchecked")
@@ -125,35 +132,41 @@ public class Form_Profile extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Bài hát đã nghe gần đây:");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(15, 15, 15))
             .addComponent(scollSong, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(edt_name))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(edt_email))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lb_role))))
+                        .addGap(10, 10, 10)
+                        .addComponent(edt_name))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(edt_email))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lb_role)))
                 .addContainerGap(256, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,6 +192,16 @@ public class Form_Profile extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        ((DefaultListModel) listSong_V1.getModel()).removeAllElements();
+        SwingUtilities.invokeLater(() -> {
+            List<Model_Song> songs = MusicApp.getRecentlyPlayedSongsByUser(UserID);
+            for (Model_Song song : songs) {
+                listSong_V1.addItem(song);
+            }
+        });
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel edt_email;
     private javax.swing.JLabel edt_name;
@@ -189,4 +212,15 @@ public class Form_Profile extends javax.swing.JPanel {
     private com.mycompany.musicapp.list.ListSong_V listSong_V1;
     private javax.swing.JScrollPane scollSong;
     // End of variables declaration//GEN-END:variables
+
+    private void init() {
+        ((DefaultListModel) listSong_V1.getModel()).removeAllElements();
+        SwingUtilities.invokeLater(() -> {
+            List<Model_Song> songs = MusicApp.getRecentlyPlayedSongsByUser(UserID);
+            for (Model_Song song : songs) {
+                listSong_V1.addItem(song);
+            }
+        });
+
+    }
 }

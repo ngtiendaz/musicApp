@@ -1,5 +1,6 @@
 package com.mycompany.musicapp.form;
 
+import com.mycompany.musicapp.Main;
 import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.model.Model_User;
 import java.awt.Graphics;
@@ -244,6 +245,11 @@ public class Bottom extends javax.swing.JPanel {
 
         lb_share.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_share.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/share.png"))); // NOI18N
+        lb_share.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_shareMouseClicked(evt);
+            }
+        });
 
         btn_back.setForeground(new java.awt.Color(255, 255, 255));
         btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/skiptostart.png"))); // NOI18N
@@ -381,6 +387,10 @@ public class Bottom extends javax.swing.JPanel {
     private void slider1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_slider1MouseReleased
         isSliderBeingDragged = false;
     }//GEN-LAST:event_slider1MouseReleased
+
+    private void lb_shareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_shareMouseClicked
+
+    }//GEN-LAST:event_lb_shareMouseClicked
 
     @Override
     protected void paintComponent(Graphics grphcs) {

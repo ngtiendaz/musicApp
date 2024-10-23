@@ -1,6 +1,7 @@
 package com.mycompany.musicapp;
 
 import com.mycompany.musicapp.form.Form_Add;
+import com.mycompany.musicapp.form.Form_BXH;
 import com.mycompany.musicapp.form.Form_FavoriteSong;
 import com.mycompany.musicapp.form.Form_Find;
 import com.mycompany.musicapp.form.Form_Following;
@@ -30,6 +31,7 @@ public class Main extends javax.swing.JFrame {
     private static Model_User user;
 
     private Form_Home home;
+    private Form_BXH bxh;
     private Form_Add add;
     private Form_FavoriteSong songfavo;
     private Form_Following following;
@@ -46,6 +48,7 @@ public class Main extends javax.swing.JFrame {
         MusicApp.updateLikedSongsForUser(user.getUserID());
         MusicApp.updateFollowForUser(user.getUserID());
         nextCategory = new Form_Next_Category();
+        bxh = new Form_BXH();
         nextArtist = new Form_Next_Artist();
         profile = new Form_Profile();
         home = new Form_Home();
@@ -77,7 +80,7 @@ public class Main extends javax.swing.JFrame {
                     profile.updateUser(user);
                 }
                 case 6 ->
-                    setForm(add);
+                    setForm(bxh);
                 case 7 ->
                     setForm(library);
                 case 8 -> {

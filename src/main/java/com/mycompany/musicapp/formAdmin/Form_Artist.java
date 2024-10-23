@@ -4,6 +4,10 @@ import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.model.CheckLoi;
 import com.mycompany.musicapp.model.Model_Album;
 import com.mycompany.musicapp.model.Model_Artist;
+import com.mycompany.musicapp.model.Model_Song;
+import com.mycompany.musicapp.print.FieldReportAlbum;
+import com.mycompany.musicapp.print.ParameterReportAlbum;
+import com.mycompany.musicapp.print.ReportManager;
 import com.mycompany.musicapp.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -11,6 +15,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -23,6 +28,8 @@ import javax.swing.SwingUtilities;
 public class Form_Artist extends javax.swing.JPanel {
 
     private String imagePathArtist = "";
+    int ArtistID;
+    String Name;
 
     public Form_Artist() {
         initComponents();
@@ -66,6 +73,8 @@ public class Form_Artist extends javax.swing.JPanel {
         imageIcon = new ImageIcon(scaledImage);
         lb_imageArtist.setIcon(imageIcon);
         imagePathArtist = artist.getImagePathArtists();
+        ArtistID = artist.getArtistID();
+        Name = artist.getName();
 
     }
 
@@ -98,6 +107,7 @@ public class Form_Artist extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         lb_imageArtist = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 51, 51));
         setMaximumSize(new java.awt.Dimension(800, 650));
@@ -176,6 +186,13 @@ public class Form_Artist extends javax.swing.JPanel {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/find.png"))); // NOI18N
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/download.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,11 +227,17 @@ public class Form_Artist extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(lb_xoa)
                         .addGap(40, 40, 40))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_imageArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -225,7 +248,7 @@ public class Form_Artist extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(edt_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -336,10 +359,30 @@ public class Form_Artist extends javax.swing.JPanel {
         edt_artistID.setText(String.valueOf(ThemID + 1));
     }//GEN-LAST:event_themMouseClicked
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        try {
+            int tongBaiHat = 0;
+
+            List<Model_Song> songList = MusicApp.Artist_Song(ArtistID);
+            ReportManager.getInstance().compileReport();
+            List<FieldReportAlbum> field = new ArrayList<>();
+            for (Model_Song song : songList) {
+                field.add(new FieldReportAlbum(song.getTitleSong(), song.getNameArtist()));
+                tongBaiHat += 1;
+            }
+//                field.add(new FieldReportHoaDon(LoaiPhong, soNgayO, tongTienPhong));
+            ParameterReportAlbum dataprint = new ParameterReportAlbum(Name, String.valueOf(tongBaiHat), field);
+            ReportManager.getInstance().printReportPayment(dataprint);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField edt_artistID;
     private javax.swing.JTextField edt_name;
     private javax.swing.JTextField edt_timkiem;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;

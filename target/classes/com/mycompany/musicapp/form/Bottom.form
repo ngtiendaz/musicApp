@@ -179,6 +179,9 @@
           <Image iconType="3" name="/com/mycompany/musicapp/icon/share.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lb_shareMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="btn_back">
       <Properties>

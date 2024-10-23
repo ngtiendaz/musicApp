@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Share_Song" pageWidth="368" pageHeight="792" columnWidth="328" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4670bb24-191c-4bf1-9eac-ff16735ffd18">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="tenAlbum" class="java.lang.String"/>
+	<parameter name="tongBaiHat" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="tenBaiHat" class="java.lang.String"/>
+	<field name="ngheSi" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="328" height="30" uuid="b9c501b7-11e2-4802-ab9e-8ea14a674b7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Danh sách bài hát ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="37" width="100" height="22" uuid="d1009e69-8500-4f32-8e25-8f824def56be"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tên]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="37" width="98" height="22" uuid="d784f116-ea39-45f1-af79-3641158cd6f2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tenAlbum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement x="0" y="0" width="164" height="30" uuid="2b7d5315-9a06-45e1-855e-af091f9fbf7b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf21bb48-69e2-4620-bd0c-c9bac2551077"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Tên Bài Hát]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="0" width="164" height="30" uuid="b3f68594-eac2-4948-ac58-fec527baae4b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f0a12a2-e54c-4d9a-86c4-587a1c3b07ce"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Nghệ Sĩ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="164" height="30" uuid="237a1c92-7803-41a8-a3c6-26deb0711d67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf21bb48-69e2-4620-bd0c-c9bac2551077"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tenBaiHat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="0" width="164" height="30" uuid="20966d5f-9ca1-48a6-9cb2-160aede0e292">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f0a12a2-e54c-4d9a-86c4-587a1c3b07ce"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ngheSi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="164" height="22" uuid="c93aff84-fc4b-4f53-93a3-80fb2b136bc3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tổng bài hát]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="164" y="10" width="164" height="22" uuid="269cf015-930d-413c-ad26-51d6f90ba9f0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tongBaiHat}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="6" width="309" height="1" uuid="2c799f90-4c17-4cd5-b5e6-5c533e45cb5b"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
