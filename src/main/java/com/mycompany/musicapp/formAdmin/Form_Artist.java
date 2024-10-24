@@ -39,7 +39,7 @@ public class Form_Artist extends javax.swing.JPanel {
         scrollArtist.getVerticalScrollBar().setBackground(Color.BLACK);
         scrollArtist.getViewport().setBackground(Color.BLACK);
         scrollArtist.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-
+// sự kiện khi click
         listArtist_Ngang.getSelectionModel().addListSelectionListener(e -> {
             Model_Artist selectedArtist = (Model_Artist) listArtist_Ngang.getSelectedValue();
             if (selectedArtist != null) {
@@ -73,6 +73,7 @@ public class Form_Artist extends javax.swing.JPanel {
         imageIcon = new ImageIcon(scaledImage);
         lb_imageArtist.setIcon(imageIcon);
         imagePathArtist = artist.getImagePathArtists();
+
         ArtistID = artist.getArtistID();
         Name = artist.getName();
 

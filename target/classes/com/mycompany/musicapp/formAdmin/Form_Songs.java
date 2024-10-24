@@ -40,6 +40,13 @@ public class Form_Songs extends javax.swing.JPanel {
         scrollSong.getVerticalScrollBar().setBackground(Color.BLACK);
         scrollSong.getViewport().setBackground(Color.BLACK);
         scrollSong.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        ((DefaultListModel) listSong_V.getModel()).removeAllElements();
+        SwingUtilities.invokeLater(() -> {
+            List<Model_Song> songs = MusicApp.getAllSongs();
+            for (Model_Song song : songs) {
+                listSong_V.addItem(song);
+            }
+        });
 
         listSong_V.getSelectionModel().addListSelectionListener(e -> {
             Model_Song selectedSong = (Model_Song) listSong_V.getSelectedValue();
@@ -48,9 +55,9 @@ public class Form_Songs extends javax.swing.JPanel {
             } else {
                 edt_songID.setText(null);
                 edt_titleSong.setText(null);
-                cbb_album.setSelectedIndex(1);
-                cbb_artist.setSelectedIndex(1);
-                cbb_category.setSelectedIndex(1);
+                cbb_album.setSelectedIndex(0);
+                cbb_artist.setSelectedIndex(0);
+                cbb_category.setSelectedIndex(0);
                 audioPathSong = "";
                 lb_AudioSrc.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addfile.png"));
                 lb_ImagePathSong.setIcon(new ImageIcon("D:\\Data_Music\\newIcon\\addimg2.png"));
@@ -136,6 +143,7 @@ public class Form_Songs extends javax.swing.JPanel {
         lb_ImagePathSong = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         lb_AudioSrc = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setMaximumSize(new java.awt.Dimension(800, 650));
@@ -235,6 +243,13 @@ public class Form_Songs extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/load.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -268,14 +283,19 @@ public class Form_Songs extends javax.swing.JPanel {
                                 .addGap(55, 55, 55)
                                 .addComponent(lb_AudioSrc)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-                        .addComponent(lb_them)
-                        .addGap(18, 18, 18)
-                        .addComponent(lb_sua)
-                        .addGap(18, 18, 18)
-                        .addComponent(lb_xoa)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                                .addComponent(lb_them)
+                                .addGap(18, 18, 18)
+                                .addComponent(lb_sua)
+                                .addGap(18, 18, 18)
+                                .addComponent(lb_xoa)))
                         .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
@@ -308,7 +328,9 @@ public class Form_Songs extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(edt_titleSong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_xoa)
@@ -401,13 +423,14 @@ public class Form_Songs extends javax.swing.JPanel {
     private void updateSongInfo(Model_Song song) {
         edt_songID.setText(String.valueOf(song.getSongID()));
         edt_titleSong.setText(song.getTitleSong());
-        cbb_album.setSelectedItem(song.getAlbumID());
-        cbb_artist.setSelectedItem(song.getArtistID());
-        cbb_category.setSelectedItem(song.getCategoryID());
+        cbb_album.setSelectedItem(song.getNameAlbum());
+        cbb_artist.setSelectedItem(song.getNameArtist());
+        cbb_category.setSelectedItem(song.getNameCategory());
         ImageIcon imageIcon = new ImageIcon(song.getImagePathSong());
         Image image = imageIcon.getImage(); // Lấy đối tượng Image từ ImageIcon
         Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(scaledImage);
+
         lb_ImagePathSong.setIcon(imageIcon);
         imagePathSong = song.getImagePathSong();
         audioPathSong = song.getAudioSrc();
@@ -469,6 +492,16 @@ public class Form_Songs extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lb_xoaMouseClicked
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        ((DefaultListModel) listSong_V.getModel()).removeAllElements();
+        SwingUtilities.invokeLater(() -> {
+            List<Model_Song> songs = MusicApp.getAllSongs();
+            for (Model_Song song : songs) {
+                listSong_V.addItem(song);
+            }
+        });
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbb_album;
     private javax.swing.JComboBox<String> cbb_artist;
@@ -476,6 +509,7 @@ public class Form_Songs extends javax.swing.JPanel {
     private javax.swing.JTextField edt_songID;
     private javax.swing.JTextField edt_timkiem;
     private javax.swing.JTextField edt_titleSong;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

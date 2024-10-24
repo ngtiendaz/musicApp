@@ -11,6 +11,38 @@ public class Model_Song {
     private String AudioSrc;
     private int Like;
     String NameArtist;
+    String NameCategory;
+    String NameAlbum;
+
+    public Model_Song(int SongID, int CategoryID, int AlbumID, int ArtistID, String ImagePathSong, String TitleSong, String AudioSrc, int Like, String NameArtist, String NameCategory, String NameAlbum) {
+        this.SongID = SongID;
+        this.CategoryID = CategoryID;
+        this.AlbumID = AlbumID;
+        this.ArtistID = ArtistID;
+        this.ImagePathSong = ImagePathSong;
+        this.TitleSong = TitleSong;
+        this.AudioSrc = AudioSrc;
+        this.Like = Like;
+        this.NameArtist = NameArtist;
+        this.NameCategory = NameCategory;
+        this.NameAlbum = NameAlbum;
+    }
+
+    public String getNameCategory() {
+        return NameCategory;
+    }
+
+    public void setNameCategory(String NameCategory) {
+        this.NameCategory = NameCategory;
+    }
+
+    public String getNameAlbum() {
+        return NameAlbum;
+    }
+
+    public void setNameAlbum(String NameAlbum) {
+        this.NameAlbum = NameAlbum;
+    }
 
     public Model_Song(int SongID, int CategoryID, int AlbumID, int ArtistID, String ImagePathSong, String TitleSong, String AudioSrc, int Like, String NameArtist) {
         this.SongID = SongID;

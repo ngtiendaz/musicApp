@@ -141,7 +141,11 @@ public class MusicApp {
 
     public static List<Model_Song> getAllSongs() {
         List<Model_Song> songList = new ArrayList<>();
-        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM songs JOIN artists ON songs.ArtistID = artists.ArtistID")) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * \n"
+                + "FROM songs \n"
+                + "JOIN artists ON songs.ArtistID = artists.ArtistID\n"
+                + "JOIN category ON songs.CategoryID = category.CategoryID\n"
+                + "JOIN album ON songs.AlbumID = album.AlbumID;")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int SongID = rs.getInt("SongID");
@@ -153,7 +157,9 @@ public class MusicApp {
                 String AudioSrc = rs.getString("AudioSrc");
                 int Like = rs.getInt("Like");
                 String NameArtist = rs.getString("Name");
-                Model_Song song = new Model_Song(SongID, CategoryID, AlbumID, ArtistID, ImagePathSong, TitleSong, AudioSrc, Like, NameArtist);
+                String NameCategory = rs.getString("TitleCategory");
+                String NameAlbum = rs.getString("TitleAlbum");
+                Model_Song song = new Model_Song(SongID, CategoryID, AlbumID, ArtistID, ImagePathSong, TitleSong, AudioSrc, Like, NameArtist, NameCategory, NameAlbum);
                 songList.add(song);
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -712,6 +718,7 @@ public class MusicApp {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     public static double[] getSongLikesByCategoriesForMonth(int month) {

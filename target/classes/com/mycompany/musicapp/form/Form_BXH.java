@@ -123,7 +123,12 @@ public class Form_BXH extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-
+        SwingUtilities.invokeLater(() -> {
+            List<Model_Song> songs = MusicApp.getTopLikedSongs(10);
+            for (Model_Song song : songs) {
+                listSong_H1.addItem(song);
+            }
+        });
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
