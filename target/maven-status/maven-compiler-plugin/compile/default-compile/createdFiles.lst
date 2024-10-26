@@ -21,6 +21,7 @@ com\mycompany\musicapp\model\Model_Album.class
 com\mycompany\musicapp\form\Form_Add$2.class
 com\mycompany\musicapp\list\ListAlbum$1.class
 com\mycompany\musicapp\model\Model_Artist.class
+com\mycompany\musicapp\form\Form_Profile$2.class
 com\mycompany\musicapp\formAdmin\Admin_Menu$2.class
 com\mycompany\musicapp\MusicApp.class
 com\mycompany\musicapp\form\Form_Add$5.class
@@ -80,10 +81,8 @@ com\mycompany\musicapp\formAdmin\Form_Category$2.class
 com\mycompany\musicapp\form\Form_Add$7.class
 com\mycompany\musicapp\formAdmin\Form_Category$1.class
 com\mycompany\musicapp\model\Model_Category.class
-com\mycompany\musicapp\form\Share_Song.class
 com\mycompany\musicapp\form\Menu$2.class
 com\mycompany\musicapp\form\Form_Add$8.class
-com\mycompany\musicapp\form\Share_Song$1.class
 com\mycompany\musicapp\formAdmin\Form_Artist$2.class
 com\mycompany\musicapp\form\Bottom$2.class
 com\mycompany\musicapp\list\ListCategory.class
@@ -143,7 +142,6 @@ com\mycompany\musicapp\formAdmin\Form_Songs$5.class
 com\mycompany\musicapp\swing\ScrollBar.class
 com\mycompany\musicapp\form\Form_BXH.class
 com\mycompany\musicapp\list\ListMenu$3.class
-com\mycompany\musicapp\form\Share_SongPanel.class
 com\mycompany\musicapp\formAdmin\Form_User.class
 com\mycompany\musicapp\print\FieldReportAlbum.class
 com\mycompany\musicapp\list\ListAlbum_Ngang$2.class

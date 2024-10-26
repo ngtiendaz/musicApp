@@ -577,6 +577,16 @@ public class MusicApp {
         }
     }
 
+    public static void addView(int UserID, int SongID) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO song_plays (UserID, SongID) " + "VALUES (?, ?)")) {
+            stmt.setInt(1, UserID);
+            stmt.setInt(2, SongID);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void deleteFavorite(int UserID, int SongID) {
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM favorites WHERE UserID = ? AND SongID = ?")) {
             stmt.setInt(1, UserID);
@@ -768,13 +778,13 @@ public class MusicApp {
     public static List<Model_Song> getRecentlyPlayedSongsByUser(int userID) {
         List<Model_Song> songList = new ArrayList<>();
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
-                "SELECT s.SongID, s.CategoryID, s.AlbumID, s.ArtistID, s.ImagePathSong, s.TitleSong, s.AudioSrc, s.Like, a.Name, p.played_at "
-                + "FROM song_plays p "
-                + "JOIN songs s ON p.SongID = s.SongID "
-                + "JOIN artists a ON s.ArtistID = a.ArtistID "
-                + "WHERE p.UserID = ? "
-                + // Thêm điều kiện lọc theo UserID
-                "ORDER BY p.played_at DESC")) {
+                "SELECT DISTINCT s.SongID, s.CategoryID, s.AlbumID, s.ArtistID, s.ImagePathSong, s.TitleSong, s.AudioSrc, s.Like, a.Name, p.played_at\n"
+                + "FROM song_plays p\n"
+                + "JOIN songs s ON p.SongID = s.SongID\n"
+                + "JOIN artists a ON s.ArtistID = a.ArtistID\n"
+                + "WHERE p.UserID = ?\n"
+                + "GROUP BY s.SongID\n"
+                + "ORDER BY MAX(p.played_at) DESC")) {
 
             // Gán giá trị userID vào PreparedStatement
             stmt.setInt(1, userID);
@@ -801,6 +811,7 @@ public class MusicApp {
         }
         return songList;
     }
+//xuất exel
 
     private static CellStyle createStyleForHeader(XSSFSheet sheet) {
         // Create font

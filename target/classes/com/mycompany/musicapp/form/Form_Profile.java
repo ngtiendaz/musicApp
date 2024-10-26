@@ -2,7 +2,6 @@ package com.mycompany.musicapp.form;
 
 import com.mycompany.musicapp.MusicApp;
 import com.mycompany.musicapp.event.EventSongSelected;
-import static com.mycompany.musicapp.form.Form_Find.setSelectedSong;
 import com.mycompany.musicapp.model.Model_Song;
 import com.mycompany.musicapp.model.Model_User;
 import com.mycompany.musicapp.swing.ScrollBar;
@@ -11,9 +10,12 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.File;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -23,6 +25,11 @@ public class Form_Profile extends javax.swing.JPanel {
     private static Model_Song selectedSong;
     int UserID;
     private EventSongSelected eventSongSelected;
+    String imagePathUser = "";
+    String pass = "";
+    String nameUser = "";
+    String role = "";
+    String email = "";
 
     public static Model_Song getSelectedSong() {
         return selectedSong;
@@ -45,6 +52,13 @@ public class Form_Profile extends javax.swing.JPanel {
     public Form_Profile() {
         initComponents();
         init();
+        ((DefaultListModel) listSong_V1.getModel()).removeAllElements();
+        SwingUtilities.invokeLater(() -> {
+            List<Model_Song> songs = MusicApp.getRecentlyPlayedSongsByUser(UserID);
+            for (Model_Song song : songs) {
+                listSong_V1.addItem(song);
+            }
+        });
         JPanel p = new JPanel();
         p.setBackground(Color.BLACK);
         scollSong.setVerticalScrollBar(new ScrollBar());
@@ -86,6 +100,11 @@ public class Form_Profile extends javax.swing.JPanel {
         lb_imageUser.setIcon(imageIcon);
         lb_role.setText(user.getRole());
         UserID = user.getUserID();
+
+        nameUser = user.getNameUser();
+        email = user.getEmail();
+        pass = user.getPass();
+        role = user.getRole();
     }
 
     @SuppressWarnings("unchecked")
@@ -95,7 +114,7 @@ public class Form_Profile extends javax.swing.JPanel {
         lb_imageUser = new javax.swing.JLabel();
         edt_name = new javax.swing.JLabel();
         edt_email = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        addImage = new javax.swing.JLabel();
         lb_role = new javax.swing.JLabel();
         scollSong = new javax.swing.JScrollPane();
         listSong_V1 = new com.mycompany.musicapp.list.ListSong_V();
@@ -116,7 +135,12 @@ public class Form_Profile extends javax.swing.JPanel {
         edt_email.setForeground(new java.awt.Color(255, 255, 255));
         edt_email.setText("Email@gmail.com");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/pencil.png"))); // NOI18N
+        addImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/musicapp/icon/pencil.png"))); // NOI18N
+        addImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addImageMouseClicked(evt);
+            }
+        });
 
         lb_role.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lb_role.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,7 +186,7 @@ public class Form_Profile extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4))
+                        .addComponent(addImage))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -177,7 +201,7 @@ public class Form_Profile extends javax.swing.JPanel {
                         .addComponent(lb_imageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jLabel4)
+                        .addComponent(addImage)
                         .addGap(20, 20, 20)
                         .addComponent(lb_role)
                         .addGap(0, 0, 0)
@@ -202,11 +226,29 @@ public class Form_Profile extends javax.swing.JPanel {
         });
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void addImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        if (fileChooser.showOpenDialog(Form_Profile.this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            imagePathUser = selectedFile.getAbsolutePath();
+            MusicApp.updateUser(UserID, email, pass, imagePathUser, nameUser, role);
+            updateUser(user);
+
+            JOptionPane.showMessageDialog(this, "Cập nhật ảnh thành công");
+            ImageIcon imageIcon = new ImageIcon(imagePathUser);
+            Image image = imageIcon.getImage(); // Lấy đối tượng Image từ ImageIcon
+            Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            imageIcon = new ImageIcon(scaledImage);
+            lb_imageUser.setIcon(imageIcon);
+        }
+    }//GEN-LAST:event_addImageMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addImage;
     private javax.swing.JLabel edt_email;
     private javax.swing.JLabel edt_name;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lb_imageUser;
     private javax.swing.JLabel lb_role;
     private com.mycompany.musicapp.list.ListSong_V listSong_V1;

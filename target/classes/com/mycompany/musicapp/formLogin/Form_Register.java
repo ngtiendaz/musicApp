@@ -172,7 +172,7 @@ public class Form_Register extends javax.swing.JPanel {
         try {
             if (CheckLoi.checkEmail(email) != null) {
 
-                MusicApp.addUser(ThemID, email, pass, "D:\\Data_Music\\newIcon\\man-avatar.png", userName, "user");
+                MusicApp.addUser(ThemID, email, pass, "D:\\Data_Music\\newIcon\\avtDk.png", userName, "user");
                 JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
                 cleardata();
 

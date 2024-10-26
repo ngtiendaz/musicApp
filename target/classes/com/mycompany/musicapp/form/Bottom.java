@@ -68,7 +68,7 @@ public class Bottom extends javax.swing.JPanel {
     public void updateSongInfo(int SongID, String imagePath, String nameSong, String nameArtist, String audioSrc, int Like) {
         stopMusic();
 //        clipTimePosition = 0;
-
+        MusicApp.addView(UserID, SongID);
         if (imagePath != null && !imagePath.isEmpty()) {
             ImageIcon imageIcon = new ImageIcon(imagePath);
             Image image = imageIcon.getImage(); // Lấy đối tượng Image từ ImageIcon
